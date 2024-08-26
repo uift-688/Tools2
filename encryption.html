@@ -63,6 +63,6 @@
 </script>
 </head>
 <body>
-<div class="background"><p id="display">暗号化済み: -</p><textarea id="text" placeholder="暗号化・復号化文字"></textarea><input type="text" id="Key" placeholder="キー" style="margin-left: 10px;" /><button mode="ETS" onclick="update_display('display', `暗号化済み: ${encrypt(document.getElementById('text').value, document.getElementById('key').value)}`)" style="margin-left: 10px;">暗号化</button><button mode="ETS" onclick="update_display('text', `復号化済み: ${decrypt(document.getElementById('text').value, document.getElementById('key').value)}`)">復号化</button></div>
+<div class="background"><p id="display">暗号化済み: -</p><textarea id="text" placeholder="暗号化・復号化文字"></textarea><input type="text" id="Key" placeholder="キー" style="margin-left: 10px;" /><button mode="ETS" onclick="update_display('display', `暗号化済み: ${encrypt(document.getElementById('text').value, document.getElementById('key').value)}`)" style="margin-left: 10px;">暗号化</button><button mode="ETS" onclick="update_display('text', `復号化済み: ${decrypt(document.getElementById('text').value, document.getElementById('key').value)}`)" style="margin-left: 10px">復号化</button></div>
 </body>
 </html>
