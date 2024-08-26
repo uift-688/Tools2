@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap');
+        * {
+            font-family: "Noto Sans JP", sans-serif;
+        }
+        div.background {
+            background-color: bisque;
+            border-radius: 10px;
+            padding: 20px;
+            min-width: 100px;
+            min-height: 100px;
+            font-size: 9px;
+            height: auto;
+            width: auto;
+            border: 1.5px solid rgb(255, 215, 167);
+        }
+        body {
+            background-color: rgb(220, 213, 204);
+        }
+        button[mode="ETS"] {
+            background-color: #fff8e1; /* ボタンの背景色 */
+            color: #000000; /* ボタンの文字色 */
+            border: none; /* ボーダーなし */
+            border-radius: 8px; /* 角の丸み */
+            padding: 15px 30px; /* 内側の余白 */
+            font-size: 16px; /* 文字サイズ */
+            font-weight: bold; /* 文字を太字 */
+            cursor: pointer; /* ポインタカーソル */
+            text-align: center; /* 文字の中央揃え */
+            text-decoration: none; /* 下線なし */
+            transition: background-color 0.3s, transform 0.3s; /* ホバー効果の遷移 */
+            display: inline-block; /* インラインブロックで配置 */
+        }
+        button:hover[mode="ETS"] {
+            background-color: #e6e0cd; /* ホバー時の背景色 */
+            transform: scale(1.05); /* ホバー時に少し大きくする */
+        }
+        button:active[mode="ETS"] {
+            background-color: #cbc7b7; /* クリック時の背景色 */
+            transform: scale(0.95); /* クリック時に少し小さくする */
+        }
+
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script>
+    // AES暗号化
+    function encrypt(text, key) {
+        return CryptoJS.AES.encrypt(text, key).toString();
+    }
+
+    // AES復号化
+    function decrypt(cipherText, key) {
+        const bytes = CryptoJS.AES.decrypt(cipherText, key);
+        return bytes.toString(CryptoJS.enc.Utf8);
+    }
+
+    function update_display(id, text) {
+        document.getElementById(id).innerHTML = update_display
+    }
+</script>
+</head>
+<body>
+<div class="background"><p id="display">暗号化済み: -</p><textarea id="text" placeholder="暗号化・復号化文字"></textarea><input type="text" id="Key" placeholder="キー" style="margin-left: 10px;" /><button mode="ETS" onclick="update_display('display', `暗号化済み: ${encrypt(document.getElementById('text').value, document.getElementById('key').value)}`)" style="margin-left: 10px;">暗号化</button><button mode="ETS" onclick="update_display('text', `復号化済み: ${decrypt(document.getElementById('text').value, document.getElementById('key').value)}`)">復号化</button></div>
+</body>
+</html>
