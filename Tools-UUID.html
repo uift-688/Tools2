@@ -1,6 +1,58 @@
 <!DOCTYPE html>
-<html>
+<htm>
     <head>
         <meta charset="utf-8">
+        <title>UUIDジェネレーター</title>
+        <style>
+            body {
+                background-color: rgb(220, 213, 204);
+            }
+            button[mode="ETS"] {
+                background-color: #fff8e1; /* ボタンの背景色 */
+                color: #000000; /* ボタンの文字色 */
+                border: none; /* ボーダーなし */
+                border-radius: 8px; /* 角の丸み */
+                padding: 15px 30px; /* 内側の余白 */
+                font-size: 16px; /* 文字サイズ */
+                font-weight: bold; /* 文字を太字 */
+                cursor: pointer; /* ポインタカーソル */
+                text-align: center; /* 文字の中央揃え */
+                text-decoration: none; /* 下線なし */
+                transition: background-color 0.3s, transform 0.3s; /* ホバー効果の遷移 */
+                display: inline-block; /* インラインブロックで配置 */
+            }
+            button:hover[mode="ETS"] {
+                background-color: #e6e0cd; /* ホバー時の背景色 */
+                transform: scale(1.05); /* ホバー時に少し大きくする */
+            }
+            button:active[mode="ETS"] {
+                background-color: #cbc7b7; /* クリック時の背景色 */
+                transform: scale(0.95); /* クリック時に少し小さくする */
+            }
+            .center {
+                display: flex;
+                justify-content: center; /* 横方向の中央揃え */
+            }
+        </style>
     </head>
-</html>
+    <body>
+        <p id="UUID" class="center" style="background-color: bisque; padding: 10px; border-radius: 20px;"></p>
+        <div class="center">
+            <button mode="ETS" onclick="update_UUID()">UUID作成</button>
+        </div>
+        <script>
+            update_UUID()
+            function generateUUID() {
+                // UUIDを生成するための関数
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    var r = Math.random() * 16 | 0,
+                        v = c === 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+            }
+            function update_UUID() {
+                document.getElementById('UUID').textContent = generateUUID()
+            }
+        </script>
+    </body>
+</htm
