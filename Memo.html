@@ -127,6 +127,19 @@
             color: #888; /* プレースホルダーの色 */
             font-style: italic; /* プレースホルダーのフォントスタイル */
         }
+        #icon1, #icon2 {
+            position: absolute;
+            top: 10px;
+        }
+        #icon2 {
+            left: 30px;
+        }
+        #file_name {
+            position: absolute;
+            right: 30px;
+            top: 12px;
+            transform: translate(0%, -50%);
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/lz-string@1.4.4/libs/lz-string.min.js"></script>
 </head>
@@ -134,12 +147,12 @@
     <div class="Menu">
         <!-- モーダル -->
         <a id="openModal">
-            <span class="material-symbols-outlined" style="color: whitesmoke;" title="Save">
+            <span class="material-symbols-outlined" style="color: whitesmoke;" title="Save" id="icon1">
                 save
             </span>
         </a>
         <a onclick="load()">
-            <span class="material-symbols-outlined" style="color: whitesmoke;" title="Load">
+            <span class="material-symbols-outlined" style="color: whitesmoke;" title="Load" id="icon2">
                 refresh
             </span>
         </a>
@@ -154,7 +167,7 @@
             <button mode="ETS" onclick="download()">ファイル</button>
         </div>
         <div class="modal-content">
-            <input type="file" id="fileInput" />
+            <input type="file" id="fileInput" style="display: none;"/>
         </div>
     </div>
     <script>
@@ -184,55 +197,41 @@
             }
         }
 
-        // クッキーの値を取得する関数
-        function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-        }
-
-        // クッキーの値を削除する関数
-        function deleteCookie(name) {
-            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-        }
-
-        // ダウンロード機能の修正
-        function download() {
-            var filename = document.getElementById('file_name').value;
-            var text = document.getElementById('memo_data').value;
-            var blob = new Blob([text], {type: "text/plain;charset=utf-8"}); // 圧縮せずに保存
-            var url = window.URL.createObjectURL(blob);
-            var a = document.createElement("a");
-            a.href = url;
-            a.download = filename;
-            a.click();
-            window.URL.revokeObjectURL(url);
-        }
-
-        // ロード機能の修正
+        // クッキーに保存されたデータの読み込み
         function load() {
-            if (!localStorage.getItem('SaveData')) {
-                alert("データが存在しません。");
-                return;
+            var savedData = localStorage.getItem("SaveData");
+            if (savedData) {
+                document.getElementById("memo_data").value = LZString.decompress(savedData);
+            } else {
+                // ファイルが選択されていない場合、ファイル選択フィールドを表示
+                document.getElementById('fileInput').click();
             }
-            var data = LZString.decompress(localStorage.getItem('SaveData'));
-            if (!data) {
-                alert("データの復元に失敗しました。");
-                return;
-            }
-            document.getElementById('memo_data').value = data;
-            localStorage.removeItem('SaveData');
         }
 
-        // ファイル選択時の処理
-        document.getElementById('fileInput').addEventListener('change', function() {
-            var file = this.files[0];
+        // ファイルが選択されたときの処理
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            var file = event.target.files[0];
             var reader = new FileReader();
             reader.onload = function(e) {
                 document.getElementById('memo_data').value = e.target.result;
             };
             reader.readAsText(file);
         });
+
+        // テキストファイルのダウンロード
+        function download() {
+            var blob = new Blob([document.getElementById('memo_data').value], { type: "text/plain;charset=utf-8" });
+            var filename = document.getElementById('file_name').value;
+            if (filename === "") {
+                filename = "Memo.txt";
+            }
+            var url = window.URL || window.webkitURL;
+            var blobURL = url.createObjectURL(blob);
+            var a = document.createElement("a");
+            a.download = filename;
+            a.href = blobURL;
+            a.click();
+        }
     </script>
 </body>
 </html>
