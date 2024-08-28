@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head><script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+        <style>
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 10px;
+                background-color: rgb(220, 213, 204);
+            }
+            /* 全体のスタイル設定 */
+        input[type="text"], 
+        input[type="password"], 
+        input[type="email"], 
+        input[type="number"], 
+        textarea {
+            width: 90%; /* フィールドの幅を親要素に合わせる */
+            padding: 10px; /* 内側の余白 */
+            margin: 10px 0; /* 外側の余白 */
+            border: 2px solid #ccc; /* 枠線の色とスタイル */
+            border-radius: 5px; /* 角の丸み */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* シャドウ */
+            font-size: 16px; /* フォントサイズ */
+            font-family: Arial, sans-serif; /* フォントファミリー */
+            color: #333; /* テキストの色 */
+            background-color: #fff; /* 背景色 */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease; /* アニメーション */
+        }
+
+        /* フォーカス時のスタイル */
+        input[type="text"]:focus, 
+        input[type="password"]:focus, 
+        input[type="email"]:focus, 
+        input[type="number"]:focus, 
+        textarea:focus {
+        border-color: #007BFF; /* フォーカス時の枠線の色 */
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* フォーカス時のシャドウ */
+        outline: none; /* デフォルトのアウトラインを削除 */
+        }
+
+        /* プレースホルダーのスタイル */
+        input::placeholder, 
+        textarea::placeholder {
+            color: #888; /* プレースホルダーの色 */
+            font-style: italic; /* プレースホルダーのフォントスタイル */
+        }
+            button[mode="ETS"] {
+            background-color: #fff8e1; /* ボタンの背景色 */
+            color: #000000; /* ボタンの文字色 */
+            border: none; /* ボーダーなし */
+            border-radius: 8px; /* 角の丸み */
+            padding: 15px 30px; /* 内側の余白 */
+            font-size: 16px; /* 文字サイズ */
+            font-weight: bold; /* 文字を太字 */
+            cursor: pointer; /* ポインタカーソル */
+            text-align: center; /* 文字の中央揃え */
+            text-decoration: none; /* 下線なし */
+            transition: background-color 0.3s, transform 0.3s; /* ホバー効果の遷移 */
+            display: inline-block; /* インラインブロックで配置 */
+            }
+            button:hover[mode="ETS"] {
+                background-color: #e6e0cd; /* ホバー時の背景色 */
+                transform: scale(1.05); /* ホバー時に少し大きくする */
+            }
+            button:active[mode="ETS"] {
+                background-color: #cbc7b7; /* クリック時の背景色 */
+                transform: scale(0.95); /* クリック時に少し小さくする */
+            }
+            div.background {
+                background-color: bisque;
+                border-radius: 10px;
+                padding: 20px;
+                min-width: 100px;
+                min-height: 100px;
+                height: auto;
+                width: auto;
+                border: 1.5px solid rgb(255, 215, 167);
+            }
+            .scroll {
+                overflow: auto;
+                max-width: 100%;
+                max-height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="background"><p id="Message" class="scroll"></p><br><br><input type="text" placeholder="SocketのURI" id="URI"><input type="text" placeholder="イベント名" id="event"><br><input type="text" placeholder="サーバーに送信するメッセージ" id="SM"><br><button mode="ETS" onclick="close(1000)">切断</button><button mode="ETS" style="margin-left: 10px;" onclick="NewSocket(document.getElementById('URI').value)">接続</button><button mode="ETS" style="margin-left: 10px;" onclick="sand(document.getElementById('SM').value); document.getElementById('SM').value = '';">送信</button></div>
+        <script>
+            let socket;
+            const obj = {
+                _value: 0,
+                get value() {
+                    return this._value;
+                },
+                set value(newValue) {
+                    document.getElementById('Message').innerHTML = newValue;
+                    this._value = newValue;
+                }
+};
+            function send(Message) {
+                    socket.emit(document.getElementById('event').value, Message)
+                    obj.value += `<br>⏩メッセージが送信されました: ${Message}`
+            };
+            function close() {
+                socket.disconnect()
+                obj.Message += "<br>✅正常に接続が閉じられました。"
+            };
+            function NewSocket(uri) {
+                socket = io(uri);
+            socket.on('connect', () => {
+                obj.value += `<br>✅正常に接続されました。`
+            // WebSocket接続が閉じられたときの処理
+            socket.on('disconnect', () => {
+                obj.value += '<br>❕Socket接続が閉じられました。';
+            });
+            // エラー発生時の処理
+            socket.io('connect_error', (error) => {
+                obj.value += ('<br>❌エラーが発生しました:', error);
+            });
+            // WebSocketメッセージを受信したときの処理
+            socket.on(document.getElementById('event').value, (data) => {
+                obj.value += `<br>⏪メッセージを受信しました: ${data}`;
+            });
+            })};
+        </script>
+    </body>
+</html>
