@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                padding: 10px;
+                background-color: rgb(220, 213, 204);
+            }
+            .pass-view {
+                position: absolute;
+                width: 300px;
+                height: 300px;
+                background-color: bisque;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%); /* 自身の高さと幅の50%だけ移動 */
+                border-radius: 20px;
+                padding: 5px;
+            }
+            button[mode="ETS"] {
+                background-color: #fff8e1; /* ボタンの背景色 */
+                color: #000000; /* ボタンの文字色 */
+                border: none; /* ボーダーなし */
+                border-radius: 8px; /* 角の丸み */
+                padding: 15px 30px; /* 内側の余白 */
+                font-size: 16px; /* 文字サイズ */
+                font-weight: bold; /* 文字を太字 */
+                cursor: pointer; /* ポインタカーソル */
+                text-align: center; /* 文字の中央揃え */
+                text-decoration: none; /* 下線なし */
+                transition: background-color 0.3s, transform 0.3s; /* ホバー効果の遷移 */
+                display: inline-block; /* インラインブロックで配置 */
+            }
+            button:hover[mode="ETS"] {
+                background-color: #e6e0cd; /* ホバー時の背景色 */
+                transform: scale(1.05); /* ホバー時に少し大きくする */
+            }
+            button:active[mode="ETS"] {
+                background-color: #cbc7b7; /* クリック時の背景色 */
+                transform: scale(0.95); /* クリック時に少し小さくする */
+            }
+            #view {
+                position: absolute;
+                white-space: nowrap;
+                font-size: 15px;
+                top: 5%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        </style>
+        <script>
+function passGenerator() {
+    const charList = [
+        '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
+        'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
+        'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',
+        'z', 'x', 'c', 'v', 'b', 'n', 'm',
+        'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P',
+        'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L',
+        'Z', 'X', 'C', 'V', 'B', 'N', 'M',
+        '$', '!', '#', '@'
+    ];
+    let password = "";
+    for (let i = 0; i < 12; i++) {
+        password += charList[Math.floor(Math.random() * charList.length)];
+    }
+    return password;
+}
+        </script>
+        <title>パスワードジェネレータ</title>
+    </head>
+    <body>
+        <font size="0.5px" style="position: absolute; bottom: 5px; left: 5px;">パスワードジェネレータ - クライアントだけの処理で安心</font>
+        <div class="pass-view">
+            <p id="view">パスワードはここに表示されます。</p>
+            <button mode="ETS" style="position: absolute; left: 50%; top: 85%; transform: translate(-50%, -50%);" onclick="document.getElementById('view').textContent = passGenerator();">生成</button>
+        </div>
+    </body>
+</html>
