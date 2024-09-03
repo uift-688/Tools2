@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            input {
+            border-radius: 30px;
+            outline-color: black;
+            border-color: rgb(184, 184, 184);
+            }
+            select {
+                border-radius: 30px;
+            }
+            button {
+                border-radius: 30px;
+            }
+        </style>
+        <script>
+function converter(conversionSource, conversionSourceUnit, conversionDestinationUnit) {
+    const data = {
+        "B": {"B": 1, "KB": 0.0009765625, "MB": 9.5367431640625e-7, "GB": 9.313225746154785e-10, "TB": 9.094947017729282e-13, "PB": 8.881784197001252e-16, "EB": 8.673617379884035e-19},
+        "KB": {"B": 1024, "KB": 1, "MB": 0.0009765625, "GB": 9.5367431640625e-7, "TB": 9.313225746154785e-10, "PB": 9.094947017729282e-13, "EB": 8.881784197001252e-16},
+        "MB": {"B": 1048576, "KB": 1024, "MB": 1, "GB": 0.0009765625, "TB": 9.5367431640625e-7, "PB": 9.313225746154785e-10, "EB": 9.094947017729282e-13},
+        "GB": {"B": 1073741824, "KB": 1048576, "MB": 1024, "GB": 1, "TB": 0.0009765625, "PB": 9.5367431640625e-7, "EB": 9.313225746154785e-10},
+        "TB": {"B": 1099511627776, "KB": 1073741824, "MB": 1048576, "GB": 1024, "TB": 1, "PB": 0.0009765625, "EB": 9.5367431640625e-7},
+        "PB": {"B": 1125899906842624, "KB": 1099511627776, "MB": 1073741824, "GB": 1048576, "TB": 1024, "PB": 1, "EB": 0.0009765625},
+        "EB": {"B": 1152921504606846976, "KB": 1125899906842624, "MB": 1099511627776, "GB": 1073741824, "TB": 1048576, "PB": 1024, "EB": 1}
+    };
+    return conversionSource * data[conversionSourceUnit][conversionDestinationUnit];
+}
+
+function speed(transferSpeed, transferSpeedUnit, transferSpeedUnitTime, dataSize, dataSizeUnit) {
+    const transferSpeedInBytes = converter(transferSpeed, transferSpeedUnit, "B");
+    const dataSizeInBytes = converter(dataSize, dataSizeUnit, "B");
+    const unitList = ["s", "m", "h"];
+    const timeInSeconds = transferSpeedInBytes / (60 ** unitList.indexOf(transferSpeedUnitTime));
+    return dataSizeInBytes / timeInSeconds;
+}
+
+function TimeConverter(second) {
+    const hours = Math.floor(second / 3600);
+    const minutes = Math.floor((second % 3600) / 60);
+    const seconds = Math.floor(second % 60);
+
+    return [
+        hours < 10 ? `0${hours}` : `${hours}`,
+        minutes < 10 ? `0${minutes}` : `${minutes}`,
+        seconds < 10 ? `0${seconds}` : `${seconds}`
+    ];
+}
+
+
+        </script>
+    </head>
+    <body>
+        <label for="size">ファイルサイズ: </label><input id="size" type="number" value="0"><select id="SizeUnit">
+            <option>B</option>
+            <option>KB</option>
+            <option>MB</option>
+            <option>GB</option>
+            <option>TB</option>
+            <option>PB</option>
+            <option>EB</option>
+        </select>
+        <br>
+        <label for="speed">転送速度: </label><input type="number" value="0" id="speed"><select id="SpeedUnit">
+            <option>B</option>
+            <option>KB</option>
+            <option>MB</option>
+            <option>GB</option>
+            <option>TB</option>
+            <option>PB</option>
+            <option>EB</option>
+        </select>/<select id="SpeedUnitTime">
+            <option>s</option>
+            <option>m</option>
+            <option>h</option>
+        </select>
+        <br>
+        <button onclick="let time = speed(document.getElementById('speed').value, document.getElementById('SpeedUnit').value, document.getElementById('SpeedUnitTime').value, document.getElementById('size').value, document.getElementById('SizeUnit').value); document.getElementById('output').textContent = `${TimeConverter(time)[0]}:${TimeConverter(time)[1]}:${TimeConverter(time)[2]}`">計算</button>
+        <br>
+        <p id="output">結果はここに表示されます</p>
+    </body>
+</html>
