@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap');
+            html {
+                display: flex;
+                justify-content: center;
+            }
+            body {
+                display: flex;
+                align-items: center;
+                background-color: rgb(220, 213, 204);
+            }
+            textarea {
+                font-family: "Noto Sans JP", sans-serif;
+                min-width: 400px;
+                min-height: 300px;
+                background-color: rgb(253, 236, 217);
+                margin-top: 400px;
+            }
+            button[mode="ETS"] {
+            background-color: #fff8e1; /* ボタンの背景色 */
+            color: #000000; /* ボタンの文字色 */
+            border: none; /* ボーダーなし */
+            border-radius: 8px; /* 角の丸み */
+            padding: 15px 30px; /* 内側の余白 */
+            font-size: 16px; /* 文字サイズ */
+            font-weight: bold; /* 文字を太字 */
+            cursor: pointer; /* ポインタカーソル */
+            text-align: center; /* 文字の中央揃え */
+            text-decoration: none; /* 下線なし */
+            transition: background-color 0.3s, transform 0.3s; /* ホバー効果の遷移 */
+            display: inline-block; /* インラインブロックで配置 */
+            }
+            button:hover[mode="ETS"] {
+                background-color: #e6e0cd; /* ホバー時の背景色 */
+                transform: scale(1.05); /* ホバー時に少し大きくする */
+            }
+            button:active[mode="ETS"] {
+                background-color: #cbc7b7; /* クリック時の背景色 */
+                transform: scale(0.95); /* クリック時に少し小さくする */
+            }
+        </style>
+    </head>
+<body>
+    <p id="Output" style="position: absolute; left: 160px;">出力はここに表示されます。</p><textarea id="code" placeholder="実行するJavaScriptコードを入力してください。"></textarea><button mode="ETS" style="position: absolute;" onclick="Execute()">実行</button>
+    <script>
+        function Execute() {
+            let code = document.getElementById('code').value; // Codeを取得
+            document.getElementById('Output').innerHTML = "実行中...<progress></progress>"; // ユーザーに実行中を知らせる
+            let exec = new Function(code) // 実行用関数を作成
+            let console_text = ''; // JSの実行内容を保存する変数を定義
+            let original_console = console; // consoleを保存
+            // consoleをオーバーライド
+            console.error = function(text) {
+                console_text += `[E] ${text}`;
+            };
+            console.log = function(text) {
+                console_text += text;
+            };
+            console.info = function(text) {
+                console_text += `[I] ${text}`;
+            };
+            console.warn = function(text) {
+                console_text += `[W] ${text}`;
+            };
+            exec() // コードを実行
+            console = original_console // consoleを元に戻す
+            document.getElementById('Output').innerHTML = ""; // OutputのHTMLを削除してtextContentを使えるようにする
+            document.getElementById('Output').textContent = console_text; // 出力を表示
+        }
+    </script>
+</body>
+</html>
