@@ -1,107 +1,116 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <style>
-            body {
-                padding: 10px;
-                display: flex;
-                background-color: rgb(220, 213, 204);
-            }
-            a {
-                color: #333; /* 通常時のリンクの色 */
-                text-decoration: none; /* 下線を消す */
-            }
-            a:hover {
-                color: #555; /* ホバー時のリンクの色 */
-            }
-            a:visited {
-                color: #666; /* 訪問済みリンクの色 */
-            }
-            a:active {
-                color: #444; /* クリック時のリンクの色 */
-            }
-            div.Menu_button {
-                width: 180px;
-                height: 170px;
-                border-width: 2px;
-                padding: 10px;
-                border-radius: 10%;
-                background-color: rgb(254, 240, 222);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-            }
-            p {
-                margin: 0;
-            }
-            div.space {
-                width: 10px;
-                height: 10px;
-            }
-        </style>
-    </head>
-    <body>
-        <a href="./Tools-UUID.html">
-            <div class="Menu_button">
-                <p>UUIDジェネレーター</p>
-                <img src="./SS.png" width="180px" height="70px" style="border-radius: 10px;">
-            </div>
-        </a>
-        <a href="./Color-Selector.html" style="margin-left: 10px;">
-            <div class="Menu_button">
-                <p>色単位変換</p>
-                <img src="./SS2.png" width="180px" height="140px" style="border-radius: 10px;">
-            </div>
-        </a>
-        <a href="./WebSocket-Client.html" style="margin-left: 10px;">
-            <div class="Menu_button">
-                <p><font size=2>WebSocketクライアント</font></p>
-                <img src="./SS3.png" width="180px" height="140px" style="border-radius: 10px;">
-            </div>
-        </a>
-        <a href="./Memo.html" style="margin-left: 10px;">
-            <div class="Menu_button">
-                <p><font size=3>メモ</font></p>
-                <img src="./SS4.png" width="180px" height="140px" style="border-radius: 10px;">
-            </div>
-        </a>
-        <a href="./encryption.html" style="margin-left: 10px;">
-            <div class="Menu_button">
-                <p><font size=3>暗号化</font></p>
-                <img src="./SS5.png" width="180px" height="55px" style="border-radius: 10px;">
-            </div>
-        </a>
-        <a href="./Socket-io-Client.html" style="margin-left: 10px;">
-            <div class="Menu_button">
-                <p><font size=3>Socketクライアント</font><br><font size=2>by Socket.io</font></p>
-                <img src="./SS6.png" width="150px" height="140px" style="border-radius: 10px;">
-            </div>
-        </a>
-        <a href="./pass-generator.html" style="margin-left: 10px;">
-            <div class="Menu_button">
-                <p><font size=3>パスワードジェネレータ</font></p>
-                <img src="./SS7.png" width="140px" height="140px" style="border-radius: 10px;">
-            </div>
-        </a>
-        <a href="./Speed-calculation.html" style="margin-left: 10px;">
-            <div class="Menu_button">
-                <p><font size=3>転送速度から時間</font></p>
-                <img src="./SS8.png" width="140px" height="100px" style="border-radius: 10px;">
-            </div>
-        </a>
-        <a href="./JavaScript-Executer.html" style="margin-left: 10px;"></a>
-            <div class="Menu_button">
-                <p><font size=3>JavaScript実行</font></p>
-                <img src="./SS9.png" width="140px" height="130px" style="border-radius: 10px;">
-            </div>
-        </a>
-        <a href="./MusicPlayer.html" style="margin-left: 10px;"></a>
-            <div class="Menu_button">
-                <p><font size=1>ミュージックプレイヤー</font></p>
-                <img src="./SS10.png" width="140px" height="140px" style="border-radius: 10px;">
-            </div>
-        </a>
-    </body>
+<head>
+    <style>
+        body {
+            padding: 10px;
+            display: flex;
+            background-color: rgb(220, 213, 204);
+            flex-wrap: wrap; /* 横並びがはみ出さないようにする */
+        }
+        a {
+            color: #333; /* 通常時のリンクの色 */
+            text-decoration: none; /* 下線を消す */
+        }
+        a:hover {
+            color: #555; /* ホバー時のリンクの色 */
+        }
+        a:visited {
+            color: #666; /* 訪問済みリンクの色 */
+        }
+        a:active {
+            color: #444; /* クリック時のリンクの色 */
+        }
+        .Menu_button {
+            width: 180px;
+            height: 170px;
+            border-width: 2px;
+            padding: 10px;
+            border-radius: 10%;
+            background-color: rgb(254, 240, 222);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin: 5px; /* スペース調整 */
+        }
+        p {
+            margin: 0;
+            font-size: 1rem; /* 基本フォントサイズ */
+            z-index: 10;
+        }
+        .small-text {
+            font-size: 0.75rem; /* 小さめのフォントサイズ */
+        }
+        .large-text {
+            font-size: 1.0rem; /* 大きめのフォントサイズ */
+        }
+        .image {
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <a href="./Tools-UUID.html">
+        <div class="Menu_button">
+            <p>UUIDジェネレーター</p>
+            <img src="./SS.png" width="180px" height="70px" class="image">
+        </div>
+    </a>
+    <a href="./Color-Selector.html">
+        <div class="Menu_button">
+            <p>色単位変換</p>
+            <img src="./SS2.png" width="180px" height="140px" class="image">
+        </div>
+    </a>
+    <a href="./WebSocket-Client.html">
+        <div class="Menu_button">
+            <p class="small-text">WebSocketクライアント</p>
+            <img src="./SS3.png" width="180px" height="140px" class="image">
+        </div>
+    </a>
+    <a href="./Memo.html">
+        <div class="Menu_button">
+            <p class="large-text">メモ</p>
+            <img src="./SS4.png" width="180px" height="140px" class="image">
+        </div>
+    </a>
+    <a href="./encryption.html">
+        <div class="Menu_button">
+            <p class="large-text">暗号化</p>
+            <img src="./SS5.png" width="180px" height="55px" class="image">
+        </div>
+    </a>
+    <a href="./Socket-io-Client.html">
+        <div class="Menu_button">
+            <p class="large-text">Socketクライアント<br><span class="small-text">by Socket.io</span></p>
+            <img src="./SS6.png" width="150px" height="140px" class="image">
+        </div>
+    </a>
+    <a href="./pass-generator.html">
+        <div class="Menu_button">
+            <p class="large-text">パスワードジェネレータ</p>
+            <img src="./SS7.png" width="140px" height="140px" class="image">
+        </div>
+    </a>
+    <a href="./Speed-calculation.html">
+        <div class="Menu_button">
+            <p class="large-text">転送速度から時間</p>
+            <img src="./SS8.png" width="140px" height="100px" class="image">
+        </div>
+    </a>
+    <a href="./JavaScript-Executer.html">
+        <div class="Menu_button">
+            <p class="large-text">JavaScript実行</p>
+            <img src="./SS9.png" width="140px" height="130px" class="image">
+        </div>
+    </a>
+    <a href="./MusicPlayer.html">
+        <div class="Menu_button">
+            <p class="small-text">ミュージックプレイヤー</p>
+            <img src="./SS10.png" width="140px" height="140px" class="image">
+        </div>
+    </a>
+</body>
 </html>
