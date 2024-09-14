@@ -2,7 +2,7 @@
 <html>
 <head>
     <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap');
         * {
             font-family: "Noto Sans JP", sans-serif;
         }
@@ -10,59 +10,78 @@
             background-color: bisque;
             border-radius: 10px;
             padding: 20px;
-            min-width: 100px;
-            min-height: 100px;
-            font-size: 9px;
-            height: auto;
-            width: auto;
+            min-width: 300px; /* サイズを調整 */
+            min-height: 200px; /* サイズを調整 */
+            font-size: 14px; /* フォントサイズを調整 */
             border: 1.5px solid rgb(255, 215, 167);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 軽いシャドウを追加 */
         }
         body {
             background-color: rgb(220, 213, 204);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* ビューポートの高さに合わせる */
+            margin: 0;
+        }
+        textarea, input {
+            font-size: 14px; /* フォントサイズを統一 */
+            padding: 10px; /* 内側の余白を追加 */
+            border-radius: 5px; /* 角を丸める */
+            border: 1px solid #ccc; /* ボーダーを追加 */
+            width: 100%; /* 幅を100%にしてスペースを使い切る */
+            box-sizing: border-box; /* ボックスモデルを設定 */
+            margin-bottom: 10px; /* 下部に余白を追加 */
         }
         button[mode="ETS"] {
-            background-color: #fff8e1; /* ボタンの背景色 */
-            color: #000000; /* ボタンの文字色 */
-            border: none; /* ボーダーなし */
-            border-radius: 8px; /* 角の丸み */
-            padding: 15px 30px; /* 内側の余白 */
-            font-size: 16px; /* 文字サイズ */
-            font-weight: bold; /* 文字を太字 */
-            cursor: pointer; /* ポインタカーソル */
-            text-align: center; /* 文字の中央揃え */
-            text-decoration: none; /* 下線なし */
-            transition: background-color 0.3s, transform 0.3s; /* ホバー効果の遷移 */
-            display: inline-block; /* インラインブロックで配置 */
+            background-color: #fff8e1;
+            color: #000000;
+            border: none;
+            border-radius: 8px;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+            display: inline-block;
+            margin: 5px; /* ボタン間の余白を調整 */
         }
         button:hover[mode="ETS"] {
-            background-color: #e6e0cd; /* ホバー時の背景色 */
-            transform: scale(1.05); /* ホバー時に少し大きくする */
+            background-color: #e6e0cd;
+            transform: scale(1.05);
         }
         button:active[mode="ETS"] {
-            background-color: #cbc7b7; /* クリック時の背景色 */
-            transform: scale(0.95); /* クリック時に少し小さくする */
+            background-color: #cbc7b7;
+            transform: scale(0.95);
         }
-
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-<script>
-    // AES暗号化
-    function encrypt(text, key) {
-        return CryptoJS.AES.encrypt(text, key).toString();
-    }
+    <script>
+        // AES暗号化
+        function encrypt(text, key) {
+            return CryptoJS.AES.encrypt(text, key).toString();
+        }
 
-    // AES復号化
-    function decrypt(cipherText, key) {
-        const bytes = CryptoJS.AES.decrypt(cipherText, key);
-        return bytes.toString(CryptoJS.enc.Utf8);
-    }
+        // AES復号化
+        function decrypt(cipherText, key) {
+            const bytes = CryptoJS.AES.decrypt(cipherText, key);
+            return bytes.toString(CryptoJS.enc.Utf8);
+        }
 
-    function update_display(id, text) {
-        document.getElementById(id).innerHTML = update_display
-    }
-</script>
+        function update_display(id, text) {
+            document.getElementById(id).innerHTML = text;
+        }
+    </script>
 </head>
 <body>
-<div class="background"><p id="display">暗号化済み: -</p><textarea id="text" placeholder="暗号化・復号化文字"></textarea><input type="text" id="Key" placeholder="キー" style="margin-left: 10px;" /><button mode="ETS" onclick="update_display('display', `暗号化済み: ${encrypt(document.getElementById('text').value, document.getElementById('key').value)}`)" style="margin-left: 10px;">暗号化</button><button mode="ETS" onclick="update_display('text', `復号化済み: ${decrypt(document.getElementById('text').value, document.getElementById('key').value)}`)" style="margin-left: 10px">復号化</button></div>
+    <div class="background">
+        <p id="display">暗号化済み: -</p>
+        <textarea id="text" placeholder="暗号化・復号化文字"></textarea>
+        <input type="text" id="Key" placeholder="キー">
+        <button mode="ETS" onclick="update_display('display', '暗号化済み: ' + encrypt(document.getElementById('text').value, document.getElementById('Key').value))">暗号化</button>
+        <button mode="ETS" onclick="update_display('display', '復号化済み: ' + decrypt(document.getElementById('text').value, document.getElementById('Key').value))">復号化</button>
+    </div>
 </body>
 </html>
